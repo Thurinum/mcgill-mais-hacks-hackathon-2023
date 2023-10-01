@@ -43,6 +43,15 @@ h1 {
     background-color: var(--accent);
     color: #383838;
     border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+    user-select: none;
+}
+.chart-arrow:hover {
+    background-color: #d9cfcf;
+}
+.chart-arrow:active {
+    background-color: #bebebe;
 }
 
 #chart {
@@ -71,6 +80,15 @@ h1 {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 
     transition: top 0.3s ease-in-out;
+}
+
+#backButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px;
+    font-size: 15px;
+    display: none;
 }
 
 #overlay {

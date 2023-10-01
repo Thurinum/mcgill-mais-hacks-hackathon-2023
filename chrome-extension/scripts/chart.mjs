@@ -1,6 +1,8 @@
 import {$} from "./utils.mjs";
 
-let chart;
+let chart
+let dataCache
+let previous
 const ctx = document.querySelector("#chart")
 
 const chartOptions = (labels, data, tooltipTitle, tooltipLabel) => ({
@@ -54,11 +56,16 @@ function createWeeklyChart(data, week) {
     const days = data.weeks[week].days.map(day => day.averageProductivity * 100)
     const tooltipTitle = (t) => `Average productivity: ${t[0].raw}%`
     const tooltipLabel = (t) => `Click to see inspect the day`
+    if (chart)
+        chart.destroy()
     chart = new Chart(ctx, chartOptions(labels, days, tooltipTitle, tooltipLabel))
 
     $("#chart").onclick = (e) => {
         const canvasPosition = Chart.helpers.getRelativePosition(e, chart)
         const dataX = chart.scales.x.getValueForPixel(canvasPosition.x)
+        previous = week
+        dataCache = data
+        $("#backButton").style.display = "block"
         createDailyChart(data, week, dataX)
     }
 }
@@ -70,13 +77,21 @@ function createDailyChart(data, week, day) {
         "20h", "21h", "22h", "23h", "24h"
     ]
     const hours = data.weeks[week].days[day].hours.map(hour => hour.averageProductivity * 100)
-    console.log(data)
     const websites = data.weeks[week].days[day].hours.map(hour => hour.websites)
     const tooltipTitle = (t) => `Average productivity: ${t[0].raw}%`
     const tooltipLabel = (t) => `Website: ${websites[t.dataIndex].url}`
 
     chart.destroy()
     chart = new Chart(ctx, chartOptions(labels, hours, tooltipTitle, tooltipLabel))
+}
+
+$("#backButton").onclick = () => {
+    if (previous === null)
+        return
+    createWeeklyChart(dataCache, previous)
+    dataCache = null
+    previous = null
+    $("#backButton").style.display = "none"
 }
 
 export { createWeeklyChart }
