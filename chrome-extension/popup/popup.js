@@ -47,6 +47,8 @@ async function analyseBrowserHistory() {
     return await analytics.json()
 }
 
+$("#loadingtext")
 analyseBrowserHistory().then((data) => {
     Chart.createWeeklyChart(data,  0)
 })
+

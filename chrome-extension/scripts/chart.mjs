@@ -64,6 +64,13 @@ function createWeeklyChart(data, week) {
 
     $("h1").innerText = weekTitle(week)
 
+    const prod = data.weeks[week].averageProductivity * 100;
+    if (prod < 0.5) {
+        $("#prod").innerText = "You're not productive at all. Try to improve!"
+    } else if (prod < 1.0) {
+        $("#prod").innerText = "You're being productive. Keep up the good work!"
+    }
+
     $("#chart").onclick = (e) => {
         const canvasPosition = Chart.helpers.getRelativePosition(e, chart)
         const dataX = chart.scales.x.getValueForPixel(canvasPosition.x)
@@ -129,5 +136,13 @@ function nextWeek() {
 
 $("#previousWeek").onclick = previousWeek
 $("#nextWeek").onclick = nextWeek
+
+// generate 100 sillt loading messages
+const loadings = [
+    "Loading...",
+    "Loading... (this is taking a while)",
+    "Loading... (this is taking a while, isn't it?)",
+
+]
 
 export { createWeeklyChart }
