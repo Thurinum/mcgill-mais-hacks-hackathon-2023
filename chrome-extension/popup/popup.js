@@ -2,36 +2,9 @@ const $ = document.querySelector.bind(document)
 const ctx = $("#productivity-chart")
 const apiEndpoint = "http://104.155.165.248:8080"
 
-async function analyseBrowserHistory() {
-    const history = await chrome.history.search({
-        text: "",
-        startTime: 0,
-        maxResults: 100000
-    })
-
-    const body = history.map(site => ({
-        url: site.url,
-        title: site.title,
-        lastVisitTime: site.lastVisitTime,
-    }))
-
-    const analytics = await fetch(apiEndpoint, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-    })
-
-    if (analytics.status !== 200) {
-        alert("Failed to get analytics data.")
-        return null
-    }
-
-    return await analytics.json()
+function err(message) {
+    alert(`Failed to obtain analytics: ${message}`)
 }
-
-analyseBrowserHistory().then(() => {})
 
 function setProgressIndicator(isVisible) {
     const spinner = $("#loading-indicator")
@@ -46,6 +19,50 @@ function setProgressIndicator(isVisible) {
         }, 500)
     }
 }
+
+async function analyseBrowserHistory() {
+    setProgressIndicator(true)
+
+    const history = await chrome.history.search({
+        text: "",
+        startTime: 0,
+        maxResults: 100000
+    })
+
+    const body = history.map(site => ({
+        url: site.url,
+        title: site.title,
+        lastVisitTime: site.lastVisitTime,
+    }))
+
+    let analytics
+    try {
+        analytics = await fetch(apiEndpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        }).finally(() => {
+            setProgressIndicator(false)
+        })
+    } catch(e) {
+        err(e.message)
+        return null
+    }
+
+    if (analytics.status !== 200) {
+        err(`The server request failed: ${analytics.status}`)
+        return null
+    }
+
+    setProgressIndicator(false)
+    return await analytics.json()
+}
+
+analyseBrowserHistory().then(() => {})
+
+
 
 function createWeeklyChart(data, week) {
     const err = (message) => {
