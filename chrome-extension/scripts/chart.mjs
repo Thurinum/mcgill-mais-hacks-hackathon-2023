@@ -1,3 +1,5 @@
+import {$} from "./utils.mjs";
+
 const ctx = document.querySelector("#chart")
 
 const chartOptions = (labels, data) => ({
@@ -10,6 +12,7 @@ const chartOptions = (labels, data) => ({
             borderColor: "#6d4ea7",
             lineTension: 0.4,
             fill: true,
+            pointHoverRadius: 8,
             backgroundColor: "rgba(109, 78, 167, 0.1)",
         }]
     },
@@ -34,8 +37,13 @@ const chartOptions = (labels, data) => ({
             },
             tooltip: {
                 enabled: true,
+                xAlign: "center",
+                yAlign: "bottom",
                 callbacks: {
-                    label: (context) => `${context.dataset.label}: ${context.formattedValue}`
+                    title(t) {
+                        return `Average productivity: ${t[0].raw}%`
+                    },
+                    label: (context) => `Click to inspect day`
                 }
             }
         }
@@ -45,7 +53,17 @@ const chartOptions = (labels, data) => ({
 function createWeeklyChart(data, week) {
     const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     const days = data.weeks[week].days.map(day => day.averageProductivity * 100)
-    new Chart(ctx, chartOptions(labels, days))
+    const chart = new Chart(ctx, chartOptions(labels, days))
+
+    $("#chart").onclick = (e) => {
+        const canvasPosition = Chart.helpers.getRelativePosition(e, chart)
+
+        // Substitute the appropriate scale IDs
+        const dataX = chart.scales.x.getValueForPixel(canvasPosition.x)
+        const dataY = chart.scales.y.getValueForPixel(canvasPosition.y)
+
+        alert(dataX)
+    }
 }
 
 export { createWeeklyChart }
