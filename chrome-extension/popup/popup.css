@@ -1,10 +1,55 @@
+:root {
+    --accent: rgba(188, 171, 222, 0.25);
+}
+
 html {
     width: 500px;
-    height: 600px;
     overflow: hidden;
 }
 body {
-    width: calc(100% - 35px);
+    font-family: "Segoe UI", sans-serif;
+    padding: 10px;
+}
+
+h1 {
+    text-align: center;
+    font-family: "Segoe UI Light", sans-serif;
+    margin: 0;
+}
+
+#summary {
+    margin: 20px 18%;
+    padding: 20px;
+    background-color: #BCABDE3F;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+#chart-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#chart-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.chart-arrow {
+    padding: 10px;
+    background-color: var(--accent);
+    color: #383838;
+    border-radius: 10px;
+}
+
+#chart {
+    flex-grow: 1;
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 #toast {
@@ -26,6 +71,17 @@ body {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 
     transition: top 0.3s ease-in-out;
+}
+
+#overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    backdrop-filter: blur(32px);
+    transition: backdrop-filter 0.3s linear;
 }
 
 #loading-indicator {

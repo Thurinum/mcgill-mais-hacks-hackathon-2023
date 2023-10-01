@@ -12,7 +12,6 @@
           "averageProductivity": 0.4,
           "hours": [
             {
-              "hour": 0,
               "averageProductivity": 0.23,
               "websites": [
                 "https://www.example.com"

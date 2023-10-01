@@ -1,7 +1,7 @@
 import * as Chart from "../scripts/chart.mjs";
-import {err, setProgressIndicator} from "../scripts/utils.mjs";
+import {$, err, setProgressIndicator} from "../scripts/utils.mjs";
 
-const apiEndpoint = "https://run.mocky.io/v3/798bb0fe-80a5-46a0-8a33-38f5022573ba"
+const apiEndpoint = "http://35.222.12.140:8080/process"
 
 async function analyseBrowserHistory() {
     setProgressIndicator(true)
@@ -21,12 +21,12 @@ async function analyseBrowserHistory() {
     let analytics
     try {
         analytics = await fetch(apiEndpoint, {
-            method: "GET",
-            // headers: {
-            //     "Content-Type": "application/json",
-            //     "Accept": "application/json",
-            // },
-            // body: JSON.stringify(body)
+            method: "POST",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
         }).finally(() => {
             setProgressIndicator(false)
         })
@@ -40,6 +40,9 @@ async function analyseBrowserHistory() {
         return null
     }
 
+    $("#chart").style.transform = "scale(1)"
+    $("#chart").style.opacity = "1"
+    $("#overlay").style.backdropFilter = "blur(0px)"
     setProgressIndicator(false)
     return await analytics.json()
 }

@@ -31,6 +31,12 @@ const chartOptions = (labels, data) => ({
         plugins: {
             legend: {
                 display: false
+            },
+            tooltip: {
+                enabled: true,
+                callbacks: {
+                    label: (context) => `${context.dataset.label}: ${context.formattedValue}`
+                }
             }
         }
     }

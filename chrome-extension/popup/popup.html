@@ -6,19 +6,31 @@
     <link rel="stylesheet" href="../libs/loading-indicator.css" />
 </head>
 <body>
-    <header id="toast">
+    <div id="toast"></div>
 
-    </header>
+    <h1>This week</h1>
+
+    <p id="summary">
+        You were not productive this week.
+        Last week, you were 20% more productive.
+        Also, you are probably a failure.
+    </p>
 
     <section id="chart-wrapper">
-        <h2 id="nodata">No data available</h2>
+        <span class="chart-arrow">&#9664;</span>
 
+        <div id="chart-container">
+            <canvas id="chart"></canvas>
+        </div>
+
+        <span class="chart-arrow">&#9654;</span>
+    </section>
+
+    <div id="overlay">
         <section id="loading-indicator">
             <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
         </section>
-
-        <canvas id="chart"></canvas>
-    </section>
+    </div>
 
     <script src="../libs/chartjs.min.js"></script>
     <script type="module" src="popup.js"></script>
