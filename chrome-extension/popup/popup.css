@@ -73,6 +73,9 @@ h1 {
 
     position: fixed;
     top: -70px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000 !important;
 
     color: #d0c7c7;
     background-color: #620000;

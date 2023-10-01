@@ -3,6 +3,7 @@ import {$} from "./utils.mjs";
 let chart
 let dataCache
 let previous
+let currentWeek = 0
 const ctx = document.querySelector("#chart")
 
 const chartOptions = (labels, data, tooltipTitle, tooltipLabel) => ({
@@ -59,6 +60,7 @@ function createWeeklyChart(data, week) {
     if (chart)
         chart.destroy()
     chart = new Chart(ctx, chartOptions(labels, days, tooltipTitle, tooltipLabel))
+    dataCache = data
 
     $("h1").innerText = weekTitle(week)
 
@@ -66,7 +68,6 @@ function createWeeklyChart(data, week) {
         const canvasPosition = Chart.helpers.getRelativePosition(e, chart)
         const dataX = chart.scales.x.getValueForPixel(canvasPosition.x)
         previous = week
-        dataCache = data
         $("#backButton").style.display = "block"
         createDailyChart(data, week, dataX)
     }
@@ -81,7 +82,7 @@ function createDailyChart(data, week, day) {
     const hours = data.weeks[week].days[day].hours.map(hour => hour.averageProductivity * 100)
     const websites = data.weeks[week].days[day].hours.map(hour => hour.websites)
     const tooltipTitle = (t) => `Average productivity: ${t[0].raw}%`
-    const tooltipLabel = (t) => `Website: ${websites[t.dataIndex].url}`
+    const tooltipLabel = (t) => `Website: ${websites.join("\n")}`
 
     chart.destroy()
     chart = new Chart(ctx, chartOptions(labels, hours, tooltipTitle, tooltipLabel))
@@ -91,7 +92,6 @@ $("#backButton").onclick = () => {
     if (previous === null)
         return
     createWeeklyChart(dataCache, previous)
-    dataCache = null
     previous = null
     $("#backButton").style.display = "none"
 }
@@ -108,5 +108,26 @@ function weekTitle(week) {
             return "Next week"
     }
 }
+
+function previousWeek() {
+    if (currentWeek === 0)
+        return
+
+    currentWeek--
+
+    createWeeklyChart(dataCache, currentWeek)
+}
+
+function nextWeek() {
+    console.log(dataCache)
+    if (currentWeek === 3)
+        return
+
+    currentWeek++
+    createWeeklyChart(dataCache, currentWeek)
+}
+
+$("#previousWeek").onclick = previousWeek
+$("#nextWeek").onclick = nextWeek
 
 export { createWeeklyChart }

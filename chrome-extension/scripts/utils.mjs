@@ -12,6 +12,9 @@ function toast(message) {
 
     setTimeout(() => {
         toast.style.top = `-70px`
+        setTimeout(() => {
+            window.close()
+        }, 500)
     }, 2000)
 }
 
