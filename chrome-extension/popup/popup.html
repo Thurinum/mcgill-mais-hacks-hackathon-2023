@@ -2,21 +2,20 @@
 <html lang="en">
 <head>
     <title>Demo Chart</title>
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
-<h1>This week</h1>
 <section id="chart-wrapper">
     <h2 id="nodata">No data available</h2>
 
-    <section id="loading-spinner">
+    <section id="loading-indicator">
         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
     </section>
 
     <canvas id="productivity-chart"></canvas>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="index.js"></script>
+<script src="../libs/chartjs.min.js"></script>
+<script type="module" src="popup.js"></script>
 </body>
 </html>

@@ -1,16 +1,16 @@
 {
-    "name": "History",
-    "description": "Gets the user's history",
+    "manifest_version": 3,
+    "name": "Popcatstinate",
+    "description": "Your browser history reveals a lot about you.",
     "version": "1.0",
     "permissions": [
         "history"
     ],
+    "icons": {
+        "512": "assets/logo.png"
+    },
     "action": {
-        "default_title": "Fuck you",
-        "default_popup": "bruh.html"
-    },
-    "background": {
-        "service_worker": "background.js"
-    },
-    "manifest_version": 3
+        "default_title": "My Productivity",
+        "default_popup": "popup/popup.html"
+    }
 }
