@@ -108,7 +108,7 @@ function weekTitle(week) {
         case 0:
             return "This week"
         case 1:
-            return "Last week"
+            return "Next week"
         case 2:
             return "Last month"
         case 3:
@@ -127,7 +127,7 @@ function previousWeek() {
 
 function nextWeek() {
     console.log(dataCache)
-    if (currentWeek === 3)
+    if (currentWeek === 1)
         return
 
     currentWeek++
@@ -136,13 +136,5 @@ function nextWeek() {
 
 $("#previousWeek").onclick = previousWeek
 $("#nextWeek").onclick = nextWeek
-
-// generate 100 sillt loading messages
-const loadings = [
-    "Loading...",
-    "Loading... (this is taking a while)",
-    "Loading... (this is taking a while, isn't it?)",
-
-]
 
 export { createWeeklyChart }
