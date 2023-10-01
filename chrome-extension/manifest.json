@@ -1,0 +1,16 @@
+{
+    "name": "History",
+    "description": "Gets the user's history",
+    "version": "1.0",
+    "permissions": [
+        "history"
+    ],
+    "action": {
+        "default_title": "Fuck you",
+        "default_popup": "bruh.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "manifest_version": 3
+}

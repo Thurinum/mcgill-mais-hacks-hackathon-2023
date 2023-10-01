@@ -4,6 +4,17 @@
     height: 100%;
 }
 
+#nodata {
+    display: none;
+}
+
+#chart-wrapper h2 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
 #loading-spinner {
     transition: opacity 0.5s ease-in-out;
 

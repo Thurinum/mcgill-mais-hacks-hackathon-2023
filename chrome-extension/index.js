@@ -1,7 +1,7 @@
 const $ = document.querySelector.bind(document)
 const ctx = $("#productivity-chart")
 
-fetch("https://run.mocky.io/v3/798bb0fe-80a5-46a0-8a33-38f5022573ba")
+fetch("https://run.mocky.io/v3/02b569d9-5131-4e3b-a100-7917fe72fcaf")
     .then(response => response.json())
     .then(data => {
         try {
@@ -25,7 +25,7 @@ function createWeeklyChart(data) {
     if (!data)
         $("nodata").style.display = "block"
 
-    const results = data.weeks
+    const results = data.results
 
     if (!results)
         err("no metrics found")
