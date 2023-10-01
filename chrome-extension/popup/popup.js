@@ -49,5 +49,5 @@ async function analyseBrowserHistory() {
 
 
 analyseBrowserHistory().then((data) => {
-    Chart.createWeeklyChart(data, 0)
+    Chart.createWeeklyChart(data,  0)
 })

@@ -60,6 +60,8 @@ function createWeeklyChart(data, week) {
         chart.destroy()
     chart = new Chart(ctx, chartOptions(labels, days, tooltipTitle, tooltipLabel))
 
+    $("h1").innerText = weekTitle(week)
+
     $("#chart").onclick = (e) => {
         const canvasPosition = Chart.helpers.getRelativePosition(e, chart)
         const dataX = chart.scales.x.getValueForPixel(canvasPosition.x)
@@ -92,6 +94,19 @@ $("#backButton").onclick = () => {
     dataCache = null
     previous = null
     $("#backButton").style.display = "none"
+}
+
+function weekTitle(week) {
+    switch (week) {
+        case 0:
+            return "This week"
+        case 1:
+            return "Last week"
+        case 2:
+            return "Last month"
+        case 3:
+            return "Next week"
+    }
 }
 
 export { createWeeklyChart }
