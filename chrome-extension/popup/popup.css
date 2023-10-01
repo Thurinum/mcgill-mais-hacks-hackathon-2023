@@ -1,5 +1,38 @@
-html
-{
-    width: 1000px; /* max: 1000px */
-    height: 750px; /* max: 750px */
+html {
+    width: 500px;
+    height: 600px;
+    overflow: hidden;
+}
+body {
+    width: calc(100% - 35px);
+}
+
+#toast {
+    width: inherit;
+    height: 30px;
+    padding: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    position: fixed;
+    top: -70px;
+
+    color: #d0c7c7;
+    background-color: #620000;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+
+    transition: top 0.3s ease-in-out;
+}
+
+#loading-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    transition: opacity 0.5s ease-out;
 }

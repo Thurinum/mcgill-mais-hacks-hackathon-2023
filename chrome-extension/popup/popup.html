@@ -3,19 +3,24 @@
 <head>
     <title>Demo Chart</title>
     <link rel="stylesheet" href="popup.css" />
+    <link rel="stylesheet" href="../libs/loading-indicator.css" />
 </head>
 <body>
-<section id="chart-wrapper">
-    <h2 id="nodata">No data available</h2>
+    <header id="toast">
 
-    <section id="loading-indicator">
-        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    </header>
+
+    <section id="chart-wrapper">
+        <h2 id="nodata">No data available</h2>
+
+        <section id="loading-indicator">
+            <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </section>
+
+        <canvas id="productivity-chart"></canvas>
     </section>
 
-    <canvas id="productivity-chart"></canvas>
-</section>
-
-<script src="../libs/chartjs.min.js"></script>
-<script type="module" src="popup.js"></script>
+    <script src="../libs/chartjs.min.js"></script>
+    <script type="module" src="popup.js"></script>
 </body>
 </html>

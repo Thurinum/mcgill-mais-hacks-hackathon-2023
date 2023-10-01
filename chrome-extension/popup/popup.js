@@ -1,9 +1,20 @@
 const $ = document.querySelector.bind(document)
 const ctx = $("#productivity-chart")
-const apiEndpoint = "http://104.155.165.248:8080"
+const apiEndpoint = "https://run.mocky.io/v3/798bb0fe-80a5-46a0-8a33-38f5022573ba"
 
 function err(message) {
-    alert(`Failed to obtain analytics: ${message}`)
+    toast(`Failed to obtain analytics: ${message}`)
+}
+
+function toast(message) {
+    const toast = $("#toast")
+
+    toast.innerText = message
+    toast.style.top = "10px"
+
+    setTimeout(() => {
+        toast.style.top = `-70px`
+    }, 2000)
 }
 
 function setProgressIndicator(isVisible) {
@@ -40,7 +51,8 @@ async function analyseBrowserHistory() {
         analytics = await fetch(apiEndpoint, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Accept": "application/json",
             },
             body: JSON.stringify(body)
         }).finally(() => {
