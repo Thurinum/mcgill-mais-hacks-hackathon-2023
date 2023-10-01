@@ -49,12 +49,12 @@ async function analyseBrowserHistory() {
     let analytics
     try {
         analytics = await fetch(apiEndpoint, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
-            body: JSON.stringify(body)
+            method: "GET",
+            // headers: {
+            //     "Content-Type": "application/json",
+            //     "Accept": "application/json",
+            // },
+            // body: JSON.stringify(body)
         }).finally(() => {
             setProgressIndicator(false)
         })
@@ -72,56 +72,48 @@ async function analyseBrowserHistory() {
     return await analytics.json()
 }
 
-analyseBrowserHistory().then(() => {})
-
-
-
-function createWeeklyChart(data, week) {
-    const err = (message) => {
-        throw new Error(`Invalid chart data provided: ${message}.`)
-    }
-
-    if (!data)
-        $("nodata").style.display = "block"
-
-    const results = data.results
-
-    if (!results)
-        err("no metrics found")
-
-    new Chart(ctx,{
-        type: "line",
-        data: {
-            labels: results.map(r => r.day),
-            datasets: [{
-                data: results.map(r => r.averageProductivity * 100),
-                borderWidth: 3,
-                borderColor: "#6d4ea7",
-                lineTension: 0.4,
-                fill: true,
-                backgroundColor: "rgba(109, 78, 167, 0.1)",
-            }]
-        },
-        options: {
-            scales: {
-                x: {
-                    ticks: {
-                        padding: 10
-                    }
-                },
-                y: {
-                    min: 0,
-                    max: 100,
-                    ticks: {
-                        callback: (value) => `${value}%`,
-                    }
+const chartOptions = (labels, data) => ({
+    type: "line",
+    data: {
+        labels: labels,
+        datasets: [{
+            data: data,
+            borderWidth: 3,
+            borderColor: "#6d4ea7",
+            lineTension: 0.4,
+            fill: true,
+            backgroundColor: "rgba(109, 78, 167, 0.1)",
+        }]
+    },
+    options: {
+        scales: {
+            x: {
+                ticks: {
+                    padding: 10
                 }
             },
-            plugins: {
-                legend: {
-                    display: false
+            y: {
+                min: 0,
+                max: 100,
+                ticks: {
+                    callback: (value) => `${value}%`,
                 }
             }
+        },
+        plugins: {
+            legend: {
+                display: false
+            }
         }
-    });
+    }
+})
+
+function createWeeklyChart(data, week) {
+    const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    const days = data.weeks[week].days.map(day => day.averageProductivity * 100)
+    new Chart(ctx, chartOptions(labels, days))
 }
+
+analyseBrowserHistory().then((data) => {
+    createWeeklyChart(data, 0)
+})
